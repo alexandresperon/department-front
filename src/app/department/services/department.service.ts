@@ -6,13 +6,14 @@ import {ResponseModel} from '../../shared/models/response.model';
 import {KeyValueModel} from '../../shared/models/keyvalue.model';
 import {PageModel} from '../../shared/models/page.model';
 import {PageRequestModel} from '../../shared/models/page-request.model';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
 
-  private readonly url: string = 'http://localhost:8080/api';
+  private readonly url: string = environment.url;
 
   constructor(private http: HttpClient) {
   }
