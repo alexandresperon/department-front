@@ -1,0 +1,37 @@
+@import './src/app/shared/sass/commons.sass'
+
+$full-width: 100%
+
+form
+  min-width: 150px
+  max-width: 500px
+  width: $full-width
+
+.full-width
+  width: $full-width
+
+h1, mat-card-title
+  color: $color-primary
+
+mat-card-title
+  font-size: 18px
+  margin-bottom: 10px
+
+mat-radio-button
+  margin: 5px 20px 0 20px
+  font-size: 14px
+
+::ng-deep.mat-form-field-ripple
+  background-color: $color-primary !important
+
+::ng-deep .mat-radio-button.mat-accent
+  .mat-radio-ripple .mat-ripple-element, .mat-radio-inner-circle
+    background-color: $color-secondary !important
+
+::ng-deep .mat-radio-button .mat-radio-outer-circle
+  border-color: $color-secondary !important
+
+.mat-button-base
+  width: 46%
+  margin: 20px 2% 10px 2%
+  color: #fff

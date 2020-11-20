@@ -1,0 +1,91 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Consultar Departamentos</mat-card-title>
+    <button id="btn-incluir" mat-raised-button color="warn" (click)="openDialog()">Incluir</button>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field class="wd-20">
+      <mat-label>Código</mat-label>
+      <input matInput [(ngModel)]="departmentFilter.id" name="id">
+    </mat-form-field>
+    <mat-form-field class="wd-54">
+      <mat-label>Nome</mat-label>
+      <input matInput [(ngModel)]="departmentFilter.name" name="name">
+    </mat-form-field>
+    <mat-form-field class="wd-20">
+      <mat-label>Diretoria</mat-label>
+      <mat-select [(ngModel)]="departmentFilter.board">
+        <mat-option value=""></mat-option>
+        <mat-option *ngFor="let board of boards" [value]="board.key">{{board.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="wd-54">
+      <mat-label>Local</mat-label>
+      <input matInput [(ngModel)]="departmentFilter.address.address" name="address">
+    </mat-form-field>
+    <mat-form-field class="wd-20">
+      <mat-label>Cidade</mat-label>
+      <input matInput [(ngModel)]="departmentFilter.address.city" name="city">
+    </mat-form-field>
+    <mat-form-field class="wd-20">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="departmentFilter.address.state">
+        <mat-option value=""></mat-option>
+        <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button id="btn-consultar" mat-raised-button color="primary" (click)="find()">Consultar</button>
+  </mat-card-actions>
+</mat-card>
+<mat-card>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="space-around stretch">
+      <table fxFlex mat-table [dataSource]="departments.content" matSort (matSortChange)="sortData($event)">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Código</th>
+          <td mat-cell *matCellDef="let d"> {{d.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome</th>
+          <td mat-cell *matCellDef="let d"> {{d.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="board">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Diretoria</th>
+          <td mat-cell *matCellDef="let d"> {{getBoard(d.board)}} </td>
+        </ng-container>
+        <ng-container matColumnDef="address.address">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Local</th>
+          <td mat-cell *matCellDef="let d"> {{d.address.address}} </td>
+        </ng-container>
+        <ng-container matColumnDef="address.city">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cidade</th>
+          <td mat-cell *matCellDef="let d"> {{d.address.city}} </td>
+        </ng-container>
+        <ng-container matColumnDef="address.state">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado</th>
+          <td mat-cell *matCellDef="let d"> {{d.address.state}} </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Ações</th>
+          <td mat-cell *matCellDef="let d">
+            <button mat-button (click)="openDialog(d)">
+              <mat-icon aria-label="Editar departamento">create</mat-icon>
+            </button>
+            <button mat-button (click)="delete(d.id)">
+              <mat-icon aria-label="Remover departamento">clear</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="depColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: depColumns"></tr>
+      </table>
+    </div>
+    <mat-paginator [length]="departments.total"
+                   [pageSize]="pagination.limit"
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   (page)="handlerPage($event)">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

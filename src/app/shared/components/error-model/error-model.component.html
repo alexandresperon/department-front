@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>
+  <mat-icon color="warn">error</mat-icon>
+  <span>Erro</span></h1>
+<div mat-dialog-content>
+  <div *ngIf="messages.length > 1; else onlyOne">
+    <p *ngFor="let message of messages">{{message}}</p>
+  </div>
+  <ng-template #onlyOne>
+    <p>{{messages[0]}}</p>
+  </ng-template>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="true">OK</button>
+</div>

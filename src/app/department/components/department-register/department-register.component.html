@@ -1,0 +1,39 @@
+<form #departmentRegistration="ngForm">
+  <h1 *ngIf="department.id" mat-dialog-title>Edição de Departamento</h1>
+  <h1 *ngIf="!department.id" mat-dialog-title>Inclusão de Departamento</h1>
+  <div mat-dialog-content>
+    <mat-form-field class="full-width" *ngIf="department.id">
+      <mat-label>Código</mat-label>
+      <input matInput [(ngModel)]="department.id" name="id" disabled="disabled">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput [(ngModel)]="department.name" name="name" maxlength="50" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Local</mat-label>
+      <input matInput [(ngModel)]="department.address.address" name="address" maxlength="50" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Cidade</mat-label>
+      <input matInput [(ngModel)]="department.address.city" name="city" maxlength="50" required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="department.address.state" name="state" required>
+        <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-card>
+      <mat-card-title>Diretoria</mat-card-title>
+      <mat-radio-group aria-label="Selecione uma opção" [(ngModel)]="department.board" name="board" required>
+        <mat-radio-button *ngFor="let board of boards" [value]="board.key"
+                          [checked]="department.board === board.key">{{board.value}}</mat-radio-button>
+      </mat-radio-group>
+    </mat-card>
+  </div>
+  <div mat-dialog-actions>
+    <button type="submit" mat-raised-button class="color-primary" (click)="save()" [disabled]="!departmentRegistration.valid">Salvar</button>
+    <button mat-raised-button class="color-secondary" (click)="exit()">Cancelar</button>
+  </div>
+</form>

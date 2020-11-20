@@ -1,0 +1,31 @@
+@import './src/app/shared/sass/commons.sass'
+
+%right-side
+  display: block
+  margin-right: 30px
+  margin-left: auto
+
+mat-card
+  margin: 10px
+
+mat-form-field
+  margin: 12px
+  min-width: 300px
+
+.wd-54
+  width: 54%
+
+.wd-20
+  width: 20%
+
+#btn-consultar
+  @extend %right-side
+  margin-bottom: 10px
+  background: $color-primary
+
+#btn-incluir
+  @extend %right-side
+  background: $color-secondary
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell
+  padding: 5px 10px 5px 10px
