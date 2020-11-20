@@ -154,7 +154,12 @@ export class DepartmentTableComponent implements OnInit {
     }).afterClosed().subscribe(res => {
       if (res === true) {
         this.departmentService.deleteDepartment(id).subscribe(() => {
-          this.refreshTable();
+          this.dialog.open(SuccessModelComponent, {
+            width: '300px',
+            data: {
+              message: `Exclusão realizada com sucesso!`
+            }
+          }).afterClosed().subscribe(() => this.refreshTable());
         });
       }
     });

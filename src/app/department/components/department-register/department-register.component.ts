@@ -52,9 +52,9 @@ export class DepartmentRegisterComponent implements OnInit {
 
   save(): void {
     if (this.department.id) {
-      this.departmentService.updateDepartment(this.department).subscribe(() => this.exit());
+      this.departmentService.updateDepartment(this.department).subscribe();
     } else {
-      this.departmentService.saveDepartment(this.department).subscribe(() => this.exit());
+      this.departmentService.saveDepartment(this.department).subscribe();
     }
   }
 

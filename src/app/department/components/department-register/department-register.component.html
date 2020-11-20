@@ -33,7 +33,7 @@
     </mat-card>
   </div>
   <div mat-dialog-actions>
-    <button type="submit" mat-raised-button class="color-primary" (click)="save()" [disabled]="!departmentRegistration.valid">Salvar</button>
-    <button mat-raised-button class="color-secondary" (click)="exit()">Cancelar</button>
+    <button type="submit" mat-raised-button class="color-primary" [mat-dialog-close]="true" (click)="save()" [disabled]="!departmentRegistration.valid">Salvar</button>
+    <button mat-raised-button class="color-secondary" [mat-dialog-close]="false"  (click)="exit()">Cancelar</button>
   </div>
 </form>
