@@ -10,6 +10,9 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {PageModel} from '../../../shared/models/page.model';
 import {MatSort, Sort} from '@angular/material/sort';
 import {ConfirmationModelComponent} from '../../../shared/components/confirmation-model/confirmation-model.component';
+import {AuthenticationService} from '../../../auth/services/authentication.service';
+import {UserModel} from '../../../auth/models/user.model';
+import {SuccessModelComponent} from '../../../shared/components/success-model/success-model.component';
 
 @Component({
   selector: 'app-department-table',
@@ -17,6 +20,14 @@ import {ConfirmationModelComponent} from '../../../shared/components/confirmatio
   styleUrls: ['./department-table.component.sass']
 })
 export class DepartmentTableComponent implements OnInit {
+  get user(): UserModel {
+    return this.#user as UserModel;
+  }
+
+  set user(value: UserModel) {
+    this.#user = value;
+  }
+
   get pagination(): PageRequestModel {
     return this.#pagination;
   }
@@ -65,6 +76,7 @@ export class DepartmentTableComponent implements OnInit {
     this.#departments = value;
   }
 
+  #user: UserModel | undefined;
   #departmentFilter: DepartmentModel;
   #pagination: PageRequestModel;
   #departments: PageModel<DepartmentModel>;
@@ -75,20 +87,31 @@ export class DepartmentTableComponent implements OnInit {
   @ViewChild(MatTable) datatable!: MatTable<any>;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(public dialog: MatDialog, private departmentService: DepartmentService) {
+  constructor(public dialog: MatDialog, private departmentService: DepartmentService,
+              private authenticationService: AuthenticationService) {
     this.#boards = [];
     this.#states = [];
     this.#departmentFilter = {address: {address: '', city: '', state: ''}, board: 0, name: ''};
     this.#pagination = {limit: 10, offset: 0, direction: 'ASC', properties: ['id']};
     this.#departments = {content: [], pages: 0, total: 0};
     this.#depColumns = ['id', 'name', 'board', 'address.address', 'address.city', 'address.state', 'action'];
+    this.authenticationService.user.subscribe(x => this.#user = x);
   }
 
   openDialog(department?: DepartmentModel): void {
     this.dialog.open(DepartmentRegisterComponent, {
       width: '500px',
       data: department ? department : {address: {address: '', city: '', state: 'AC'}, board: 1, name: ''}
-    }).afterClosed().subscribe(() => this.refreshTable());
+    }).afterClosed().subscribe(res => {
+      if (res === true) {
+        this.dialog.open(SuccessModelComponent, {
+          width: '300px',
+          data: {
+            message: `${department ? 'Edição' : 'Inclusão'} realizada com sucesso!`
+          }
+        }).afterClosed().subscribe(() => this.refreshTable());
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -130,7 +153,9 @@ export class DepartmentTableComponent implements OnInit {
       }
     }).afterClosed().subscribe(res => {
       if (res === true) {
-        this.departmentService.deleteDepartment(id).subscribe(() => this.refreshTable());
+        this.departmentService.deleteDepartment(id).subscribe(() => {
+          this.refreshTable();
+        });
       }
     });
   }
@@ -156,4 +181,9 @@ export class DepartmentTableComponent implements OnInit {
       direction: this.sort.direction.toUpperCase(), properties: [this.sort.active]
     });
   }
+
+  isAdmin(): boolean {
+    return this.user && this.user.authorities.filter(a => a.authority === 'ROLE_ADMIN').length > 0;
+  }
+
 }

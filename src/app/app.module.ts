@@ -16,12 +16,21 @@ import {LoaderInterceptorService} from './spinner/services/interceptor.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ErrorModelComponent} from './shared/components/error-model/error-model.component';
 import {ErrorHandlerImpl} from './handler/error.handler';
+import {LoginComponent} from './login/login/login.component';
+import {BasicAuthInterceptor} from './auth/interceptors/basic-auth.interceptor';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import { SuccessModelComponent } from './shared/components/success-model/success-model.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConfirmationModelComponent,
-    ErrorModelComponent
+    ErrorModelComponent,
+    LoginComponent,
+    SuccessModelComponent
   ],
   imports: [
     BrowserModule,
@@ -33,15 +42,18 @@ import {ErrorHandlerImpl} from './handler/error.handler';
     DepartmentModule,
     HttpClientModule,
     MatProgressSpinnerModule,
-    StoreModule.forRoot({spin: spinnerReducer})
+    StoreModule.forRoot({spin: spinnerReducer}),
+    ReactiveFormsModule,
+    MatInputModule,
+    FormsModule,
+    MatCardModule,
+    FlexLayoutModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoaderInterceptorService,
-    multi: true
-  }, {
-    provide: ErrorHandler, useClass: ErrorHandlerImpl
-  }],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},
+    {provide: ErrorHandler, useClass: ErrorHandlerImpl}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

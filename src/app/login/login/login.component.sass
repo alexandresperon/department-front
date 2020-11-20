@@ -1,0 +1,31 @@
+@import './src/app/shared/sass/commons.sass'
+
+mat-card
+  background: $color-secondary
+
+mat-card-title
+  color: $color-primary
+
+mat-form-field
+  margin: 5px 10px 5px 10px
+  width: 95%
+
+::ng-deep.mat-form-field-ripple
+  background-color: $color-primary !important
+
+::ng-deep.mat-form-field .mat-form-field-label,
+::ng-deep.mat-form-field.mat-form-field-invalid .mat-form-field-label,
+::ng-deep.mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker
+  color: $color-primary
+
+button
+  margin: 5px 10px 5px 10px
+  width: 95%
+  background: $color-primary
+  color: white
+
+.main-div
+  height: 100vh
+  display: flex
+  justify-content: center
+  align-items: center

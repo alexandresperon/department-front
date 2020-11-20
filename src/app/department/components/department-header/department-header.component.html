@@ -4,7 +4,9 @@
   </button>
   <span class="title">Departamentos</span>
   <span class="spacer"></span>
-  <button mat-icon-button aria-label="Ícone de saída">
+  <mat-icon class="self">person</mat-icon>
+  <span>{{user().name}}</span>
+  <button mat-icon-button aria-label="Ícone de saída" (click)="logout()">
     <mat-icon>login</mat-icon>
   </button>
 </mat-toolbar>

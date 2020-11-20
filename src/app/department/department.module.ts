@@ -18,9 +18,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorIntlProvider} from './providers/mat-paginator-intl.provider';
+import { DepartmentComponent } from './department.component';
 
 @NgModule({
-  declarations: [DepartmentRegisterComponent, DepartmentTableComponent, DepartmentHeaderComponent],
+  declarations: [DepartmentRegisterComponent, DepartmentTableComponent, DepartmentHeaderComponent, DepartmentComponent],
   exports: [
     DepartmentRegisterComponent,
     DepartmentTableComponent,

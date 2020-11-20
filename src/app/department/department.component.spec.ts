@@ -1,31 +1,25 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {DepartmentTableComponent} from './department-table.component';
+import {DepartmentComponent} from './department.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
-describe('DepartmentTableComponent', () => {
-  let component: DepartmentTableComponent;
-  let fixture: ComponentFixture<DepartmentTableComponent>;
+describe('DepartmentComponent', () => {
+  let component: DepartmentComponent;
+  let fixture: ComponentFixture<DepartmentComponent>;
 
-  // @ts-ignore
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         HttpClientTestingModule],
-      declarations: [DepartmentTableComponent],
-      providers: [
-        {provide: MatDialog, useValue: {}},
-        {provide: MatDialogRef, useValue: {}}
-      ]
+      declarations: [DepartmentComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DepartmentTableComponent);
+    fixture = TestBed.createComponent(DepartmentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

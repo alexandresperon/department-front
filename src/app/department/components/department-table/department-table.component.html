@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>Consultar Departamentos</mat-card-title>
-    <button id="btn-incluir" mat-raised-button color="warn" (click)="openDialog()">Incluir</button>
+    <button id="btn-incluir" mat-raised-button color="warn" (click)="openDialog()" *ngIf="isAdmin()">Incluir</button>
   </mat-card-header>
   <mat-card-content>
     <mat-form-field class="wd-20">
@@ -68,14 +68,18 @@
           <td mat-cell *matCellDef="let d"> {{d.address.state}} </td>
         </ng-container>
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> Ações</th>
+          <th mat-header-cell *matHeaderCellDef>
+            <div *ngIf="isAdmin()"> Ações</div>
+          </th>
           <td mat-cell *matCellDef="let d">
-            <button mat-button (click)="openDialog(d)">
-              <mat-icon aria-label="Editar departamento">create</mat-icon>
-            </button>
-            <button mat-button (click)="delete(d.id)">
-              <mat-icon aria-label="Remover departamento">clear</mat-icon>
-            </button>
+            <div *ngIf="isAdmin()">
+              <button mat-button (click)="openDialog(d)">
+                <mat-icon aria-label="Editar departamento">create</mat-icon>
+              </button>
+              <button mat-button (click)="delete(d.id)">
+                <mat-icon aria-label="Remover departamento">clear</mat-icon>
+              </button>
+            </div>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="depColumns"></tr>

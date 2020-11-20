@@ -1,0 +1,18 @@
+<div class="main-div">
+  <mat-card class="mat-elevation-z19">
+    <mat-card-title fxLayout="row" fxLayoutAlign="center">Departamentos</mat-card-title>
+    <mat-card-content>
+      <form #loginForm="ngForm">
+        <mat-form-field>
+          <mat-label>Usuário</mat-label>
+          <input matInput name="username" [(ngModel)]="username" required/>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Senha</mat-label>
+          <input matInput type="password" name="password" [(ngModel)]="password" required/>
+        </mat-form-field>
+        <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="!loginForm.valid">Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

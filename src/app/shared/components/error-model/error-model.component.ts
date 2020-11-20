@@ -1,5 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Component, Inject, NgZone, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-error-model',
@@ -10,12 +10,16 @@ export class ErrorModelComponent implements OnInit {
 
   messages: string[];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ErrorModelComponent>, private ngZone: NgZone) {
     this.messages = data.error.messages;
-    debugger
   }
 
   ngOnInit(): void {
   }
 
+  exit(): void {
+    this.ngZone.run(() => {
+      this.dialogRef.close();
+    });
+  }
 }
